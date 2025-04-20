@@ -7,70 +7,125 @@
 .main {
     width: 500px;
     height: auto;
-    padding: 10px;
     box-shadow: 5px 5px 5px 5px rgb(134, 134, 134);
     margin: 20px auto;
+    border: 1px solid #4284e7;
 }
 
-.main__chat__form {
+/*верхнее меню с кнопками*/
+.main__upperMenu {
     display: flex;
     justify-content: space-between;
+    background-color: #4284e7;
+    color: white;
+    padding: 14px;
+    font-size: 16px;
+}
+
+.main__hiddenMenu {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.main__hiddenMenuContent {
+    display: none;
+    position: absolute;
+    background-color: transparent;
+    min-width: 110px;
+}
+
+.main__hiddenMenuContent a {
+    align-self: flex-end;
+    color: black;
+    padding: 4px;
+    display: block;
+    text-decoration: none;
+    border: 1px solid black;
+    border-radius: 4px;
+    background-color: white;
+}
+
+.main__dropbtn {
+    background-color: transparent;
+    width: fit-content;
+    height: fit-content;
+    color: white;
+    border: none;
+}
+
+.main__dropbtn > img {
+    width: 16px;
+    height: 16px;
+}
+
+.main__hiddenMenuContent a:hover {background-color: white;}
+
+.main__hiddenMenu:hover .main__hiddenMenuContent {display: block;}
+
+/*чат*/
+.main__chat__content {
+    overflow: auto;
+    padding: 5px;
+    height: 400px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/*общие свойства сообщений*/
+.main__messages {
+    border: 1px solid #4284e7;
+    width: fit-content;
+    height: fit-content;
+    font-size: 14px;
+    padding: 4px;
+    border-radius: 4px;
+}
+
+/*сообщения пользователя*/
+.main__user__messages {
+    align-self: flex-end;
+    color: black;
+    text-decoration: none;
+}
+
+/*сообщения сервера*/
+.main__server__messages {
+    align-self: flex-start;
+}
+
+/*нижняя форма и кнопка отправки*/
+.main__chat__form {
+    display: flex;
+    border: 1px solid #4284e7;
+    height: fit-content;
 }
 
 .main__chat__form__input {
-    border: 1px solid #4284e7;
+    border: none;
     padding: 7px 5px;
-    width: 80%;
-    margin-right: 10px;
+    width: 100%;
     outline: none;
-    border-radius: 4px;
 }
 .main__chat__form__input:focus {
     border: 2px solid rgba(13,27,255,0.7);
 }
 
-.main__btn {
+.main__btn__send {
     border: none;
     background-color: #4284e7;
-    padding: 0 5px;
-    width: 30%;
+    width: fit-content;
+    height: fit-content;
+    padding: 4px;
     cursor: pointer;
-    border-radius: 4px;
 }
-.main__btn:hover {
+
+.main__btn__send > img {
+    width: 24px;
+    height: 24px;
+}
+
+.main__btn__send:hover {
     background-color: rgba(146,173,255,0.7);
-}
-
-.main__chat__content {
-    overflow: auto;
-    border: 1px solid #4284e7;
-    padding: 5px;
-    margin-top: 12px;
-    height: 400px;
-    border-radius: 4px;
-}
-.messages {
-    border: 1px solid #4284e7;
-    border-radius: 10px;
-    padding: 10px;
-    margin-bottom: 7px;
-    align-self: flex-end;
-}
-
-.chat__user__messages {
-    display: flex;
-    flex-flow: column wrap;
-
-}
-.chat__server__messages, a {
-    cursor: pointer;
-    color: rgba(255,165,158,0.7);
-    text-decoration: none
-}
-.chat__server__messages:hover, a:hover {
-    color: #ff000d;
-}
-
-.geo-location {
-    margin-left: 6px;
 }

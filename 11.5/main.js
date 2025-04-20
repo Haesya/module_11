@@ -1,60 +1,37 @@
-const wsUri = "wss://echo.websocket.org";
+const URL = "wss://echo.websocket.org";
 
-const input = document.querySelector('.input');
-const btnMess = document.querySelector('.main__btn__mess');
-const btnGeo = document.querySelector('.main__btn__geo');
-const userMessages = document.querySelector('.chat__user__messages');
-const serverMessages = document.querySelector('.chat__server__messages');
-const wrapperChat =  document.querySelector('.main__chat__content');
+const btnGeo = document.querySelector('.main__geolocation');
+const clearChat = document.querySelector('.main__clearChat')
+const chatContent =  document.querySelector('.main__chat__content');
+const userMessages = 'main__user__messages'
+const serverMessages = 'main__server__messages'
+const input = document.querySelector('.main__chat__form__input');
+const btnSendMessage = document.querySelector('.main__btn__send');
 
-//Выводит сообщения
-function writeToScreen(message, position='flex-end') {
-    let element = `
-        <p class='messages' style='align-self: ${position}'>
-            ${message}
-        </p>
-    `;
-    userMessages.innerHTML += element;
-    wrapperChat.scrollTop = wrapperChat.scrollHeight;
-}
-
-//Объект соединения
-let websocket = new WebSocket(wsUri);
+/*открыли соединение*/
+let websocket = new WebSocket(URL);
 websocket.onopen = function(evt) {
     console.log("CONNECTED");
 };
+
+//Выводит сообщения
+function writeToScreen(message, who) {
+    let element = `
+        <p class='main__messages ${who}'>
+            ${message}
+        </p>
+    `;
+    chatContent.innerHTML += element;
+    chatContent.scrollTop = chatContent.scrollHeight;
+}
 websocket.onmessage = function(evt) {
-    writeToScreen(`ответ сервера: ${evt.data}`, 'flex-start');
+    writeToScreen(`Сервер: ${evt.data}`, serverMessages);
 };
 websocket.onerror = function(evt) {
-    writeToScreen(`server: ${evt.data}`, 'flex-start');
+    writeToScreen(`Сервер: ${evt.data}`, serverMessages);
 };
 
-//отправка сообщения
-btnMess.addEventListener('click', () => {
-    let message = input.value;
-    websocket.send(message);
-    writeToScreen(`Вы: ${message}`);
-    input.value = ''
-
-});
-
-
-//гео-локация
-// Функция сообщения об ошибке
-const error = () => {
-    let textErr0r = 'Невозможно получить ваше местоположение';
-    writeToScreen(textErr0r);
-};
-
-// Функция, срабатывающая при успешном получении геолокации
-const success = (position) => {
-    let latitude  = position.coords.latitude;
-    let longitude = position.coords.longitude;
-    let geoLink = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
-    writeToScreen(`<a  href='${geoLink}' target='_blank'>Ваша гео-локация</a>`);
-};
-
+/*гео-локация*/
 btnGeo.addEventListener('click', () => {
     if (!navigator.geolocation) {
         console.log('Geolocation не поддерживается вашим браузером');
@@ -63,7 +40,33 @@ btnGeo.addEventListener('click', () => {
     }
 });
 
-//удаляем сообщения
-serverMessages.addEventListener('click', () => {
-    userMessages.innerHTML = " ";
+/*не получили гео-локацию*/
+const error = () => {
+    let textError = 'Невозможно получить ваше местоположение';
+    writeToScreen(textError, serverMessages);
+};
+
+/*получили гео-локацию*/
+const success = (position) => {
+    let latitude  = position.coords.latitude;
+    let longitude = position.coords.longitude;
+    let geoLink = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
+    writeToScreen('Где я', userMessages)
+    writeToScreen(`<a  href='${geoLink}' target='_blank'>Ваше местоположение</a>`, serverMessages);
+};
+
+/*очистить чат*/
+clearChat.addEventListener('click', () => {
+    chatContent.innerHTML = " ";
 });
+
+//отправка сообщения
+btnSendMessage.addEventListener('click', () => {
+    let message = input.value;
+    websocket.send(message);
+    writeToScreen(`Вы: ${message}`, userMessages);
+    input.value = ''
+});
+
+
+

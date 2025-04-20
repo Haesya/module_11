@@ -9,15 +9,28 @@
 <header class="header">
 </header>
 <main class="main">
-        <form class="main__chat__form" action="#">
-            <input class="main__chat__form__input input" type="text" name="text" placeholder="Здесь вводится текст сообщения">
-            <button class="main__btn main__btn__mess">Отправить</button>
-            <button class="main__btn geo-location main__btn__geo">Гео-локация</button>
-        </form>
-        <div class="main__chat__content">
-            <div class="chat__user__messages"></div>
-            <div class="chat__server__messages">Удалить все сообщения</div>
+    <!--верхнее меню-->
+    <div class="main__upperMenu">
+        <div class="main__person">Чат с самим собой</div>
+        <div class="main__hiddenMenu">
+            <button class="main__dropbtn"><img src="menu.svg" alt="menu"></button>
+            <div class="main__hiddenMenuContent">
+                <a href="#" class="main__geolocation">Геолокация</a>
+                <a href="#" class="main__clearChat">Очистить чат</a>
+            </div>
         </div>
+    </div>
+
+    <!--сюда выводятся сообщения-->
+    <div class="main__chat__content">
+    </div>
+
+    <!--здесь вводить сообщения-->
+    <form class="main__chat__form" action="#">
+        <input class="main__chat__form__input" type="text" name="text" placeholder="Введите текст...">
+        <button class="main__btn__send"><img src="arrowRight.svg" alt="sendButton"></button>
+    </form>
+
 </main>
 <script src="main.js"></script>
 </body>
