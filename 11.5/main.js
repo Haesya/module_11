@@ -63,8 +63,12 @@ clearChat.addEventListener('click', () => {
 //отправка сообщения
 btnSendMessage.addEventListener('click', () => {
     let message = input.value;
-    websocket.send(message);
-    writeToScreen(`Вы: ${message}`, userMessages);
+    if (message !== "") {
+        websocket.send(message);
+        writeToScreen(`Вы: ${message}`, userMessages);
+    } else {
+        writeToScreen('Сервер: введите сообщение!', serverMessages)
+    }
     input.value = ''
 });
 
